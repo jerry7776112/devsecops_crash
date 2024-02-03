@@ -23,4 +23,15 @@ jobs:
 
    - name: Run Bandit Scan
    # .的意思為: 掃描文件夾裡面的所有內容
-     run: bandit -ll -ii -r .
+   # -f 輸出檔案格式 -o 檔名.輸出檔案格式
+     run: bandit -ll -ii -r . -f json -o bandit-report.json
+
+   # 保存記錄
+   - name: Upload Artifact
+     uses: actions/upload-artifact@v3
+   # 遇到失敗(因為前面掃描到有漏洞就會以失敗而停止執行)也要執行後面的記錄保存步驟
+     if: always()
+     with:
+      name: bandit-findings
+      path: bandit-report.json
+     
