@@ -23,4 +23,4 @@ jobs:
 
    - name: Run Bandit Scan
    # .的意思為: 掃描文件夾裡面的所有內容
-     run: bandit -r .
+     run: bandit -ll -ii -r .
