@@ -1,0 +1,26 @@
+name: CI
+
+on: [push]
+
+jobs:
+ sast_scan:
+ # 執行 Bandit這個sast掃描工具
+   name: Run Bandit Scan
+   runs-on: ubuntu-latest
+
+   steps:
+   - name: Checkout code
+   # 檢查要掃描的程式碼
+     uses: actions/checkout@v2
+   # 安裝python，因為Bandit是一個python package
+   - name: Set Python
+     uses: actions/setup-python@v2
+     with:
+       python-version: 3.8
+   
+   - name: Install Bandit
+     run: pip install bandit
+
+   - name: Run Bandit Scan
+   # .的意思為: 掃描文件夾裡面的所有內容
+     run: bandit -r .
